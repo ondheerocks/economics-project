@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>India's Private Investment Puzzle: Still Not Picking Up?</title>
+<style>
+/* ── Reset & base ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;
+  --navy-light:#2E4A7A;
+  --green:#27AE60;
+  --red:#E74C3C;
+  --amber:#F39C12;
+  --gray:#333333;
+  --mid:#888;
+  --light:#F5F5F5;
+  --white:#FFFFFF;
+  --border:#CCCCCC;
+  --green-bg:#EAF7EE;
+  --red-bg:#FDEDEC;
+  --amber-bg:#FEF9E7;
+  --blue-bg:#EBF5FB;
+}
+body{
+  font-family:'Calibri','Segoe UI',Arial,sans-serif;
+  background:#111;
+  color:var(--gray);
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+/* ── Slide shell ──────────────────────────────────────────────── */
+#deck{
+  position:relative;
+  width:min(96vw, calc(96vh * 16/9));
+  aspect-ratio:16/9;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  background:var(--white);
+  display:none;
+  flex-direction:column;
+  font-size:clamp(8px,1.3vw,16px);
+}
+.slide.active{display:flex}
+
+/* ── Title bar ────────────────────────────────────────────────── */
+.title-bar{
+  background:var(--navy);
+  color:var(--white);
+  padding:.45em 1.2em;
+  font-size:1.5em;
+  font-weight:700;
+  flex-shrink:0;
+  letter-spacing:.02em;
+}
+.title-bar.green{background:var(--green)}
+.title-bar.red  {background:var(--red)}
+.title-bar.amber{background:var(--amber)}
+
+/* ── Body area ────────────────────────────────────────────────── */
+.body{flex:1;padding:.7em 1.2em;overflow:hidden;display:flex;flex-direction:column;gap:.55em}
+
+/* ── Utility ──────────────────────────────────────────────────── */
+.row{display:flex;gap:.7em;flex:1;min-height:0}
+.col{display:flex;flex-direction:column;gap:.5em;flex:1;min-width:0}
+.badge{display:inline-block;padding:.15em .55em;border-radius:3px;font-weight:700;color:var(--white);font-size:.85em}
+.badge.green{background:var(--green)}
+.badge.red  {background:var(--red)}
+.badge.amber{background:var(--amber)}
+.badge.navy {background:var(--navy)}
+
+/* ── Cards ────────────────────────────────────────────────────── */
+.card{
+  border-radius:5px;
+  border-left:4px solid var(--navy);
+  background:var(--light);
+  padding:.5em .75em;
+}
+.card.green{border-color:var(--green);background:var(--green-bg)}
+.card.red  {border-color:var(--red)  ;background:var(--red-bg)}
+.card.amber{border-color:var(--amber);background:var(--amber-bg)}
+.card.blue {border-color:var(--navy-light);background:var(--blue-bg)}
+.card.navy {border-color:var(--navy);background:#EEF2F8}
+.card-title{font-weight:700;font-size:1.05em;margin-bottom:.25em}
+.card-title.green{color:var(--green)}
+.card-title.red  {color:var(--red)}
+.card-title.amber{color:var(--amber)}
+.card-title.navy {color:var(--navy)}
+
+/* ── Metric dashboard cards ───────────────────────────────────── */
+.metric-card{
+  flex:1;
+  border-radius:6px;
+  border:2px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.metric-card .mc-header{
+  padding:.3em .6em;
+  font-weight:700;
+  font-size:.85em;
+  color:var(--white);
+}
+.metric-card .mc-val{
+  font-size:1.8em;
+  font-weight:900;
+  text-align:center;
+  padding:.2em;
+}
+.metric-card .mc-note{
+  font-size:.75em;
+  padding:.2em .55em .4em;
+  color:var(--gray);
+  flex:1;
+}
+/* ── Panel (colored half-section) ────────────────────────────── */
+.panel{
+  flex:1;
+  border-radius:6px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.panel .panel-header{
+  padding:.4em .8em;
+  font-weight:700;
+  font-size:1em;
+  color:var(--white);
+}
+.panel .panel-body{
+  flex:1;
+  padding:.5em .8em;
+  font-size:.88em;
+  overflow:hidden;
+}
+.panel.green{border:2px solid var(--green)}
+.panel.green .panel-header{background:var(--green)}
+.panel.green .panel-body{background:var(--green-bg)}
+.panel.red{border:2px solid var(--red)}
+.panel.red .panel-header{background:var(--red)}
+.panel.red .panel-body{background:var(--red-bg)}
+.panel.amber{border:2px solid var(--amber)}
+.panel.amber .panel-header{background:var(--amber)}
+.panel.amber .panel-body{background:var(--amber-bg)}
+.panel.blue{border:2px solid var(--navy-light)}
+.panel.blue .panel-header{background:var(--navy-light)}
+.panel.blue .panel-body{background:var(--blue-bg)}
+.panel.navy{border:2px solid var(--navy)}
+.panel.navy .panel-header{background:var(--navy)}
+.panel.navy .panel-body{background:#EEF2F8}
+
+/* ── VS badge ─────────────────────────────────────────────────── */
+.vs-badge{
+  align-self:center;
+  background:var(--amber);
+  color:var(--white);
+  font-weight:900;
+  font-size:1.2em;
+  border-radius:50%;
+  width:2.5em;height:2.5em;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+
+/* ── Table ────────────────────────────────────────────────────── */
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+}
+thead tr{background:var(--navy);color:var(--white)}
+thead th{padding:.4em .6em;text-align:left;font-weight:700}
+tbody tr:nth-child(odd){background:var(--light)}
+tbody tr:nth-child(even){background:var(--white)}
+tbody td{padding:.4em .6em;vertical-align:top}
+
+/* ── Rate row ─────────────────────────────────────────────────── */
+.rate-row{
+  display:flex;
+  align-items:center;
+  gap:.7em;
+  background:var(--light);
+  border-radius:4px;
+  padding:.35em .7em;
+  border-left:5px solid var(--navy);
+}
+.rate-row.green{border-color:var(--green)}
+.rate-row.red  {border-color:var(--red)}
+.rate-row.navy {border-color:var(--navy)}
+.rate-label{flex:1;font-weight:600;font-size:.95em}
+.rate-val  {font-size:1.6em;font-weight:900;min-width:4.5em;text-align:center}
+.rate-note {font-size:.78em;color:var(--mid);font-style:italic;flex:1}
+
+/* ── CU gauge ─────────────────────────────────────────────────── */
+.gauge-wrap{display:flex;flex-direction:column;gap:.4em}
+.gauge-label{font-size:.82em;font-weight:600;margin-bottom:.1em}
+.gauge-track{height:1.4em;background:#E0E0E0;border-radius:2em;overflow:hidden;position:relative}
+.gauge-fill {height:100%;border-radius:2em;transition:width .6s}
+.gauge-caption{font-size:.78em;font-style:italic;text-align:center;margin-top:.1em}
+
+/* ── Leakage funnel cards ─────────────────────────────────────── */
+.leak-card{
+  flex:1;
+  border-radius:6px;
+  overflow:hidden;
+  border:2px solid;
+  display:flex;
+  flex-direction:column;
+}
+.leak-card .lc-head{padding:.35em .6em;color:var(--white);font-weight:700;font-size:.9em}
+.leak-card .lc-body{padding:.45em .65em;font-size:.82em;flex:1;background:var(--light)}
+
+/* ── Bottom note / source ─────────────────────────────────────── */
+.source{
+  font-size:.72em;
+  color:var(--mid);
+  font-style:italic;
+  padding:.15em 1.2em .3em;
+  flex-shrink:0;
+}
+.takeaway{
+  background:var(--navy);
+  color:var(--white);
+  padding:.4em 1em;
+  font-size:.9em;
+  font-weight:600;
+  border-radius:4px;
+  flex-shrink:0;
+}
+.takeaway.green{background:var(--green)}
+.takeaway.red  {background:var(--red)}
+.takeaway.amber{background:var(--amber)}
+
+/* ── Lists ────────────────────────────────────────────────────── */
+ul,ol{padding-left:1.3em;margin:.1em 0}
+li{margin:.15em 0;line-height:1.4}
+.indent{padding-left:1.2em}
+
+/* ── Slide 1 – Title slide ────────────────────────────────────── */
+#s1{background:var(--navy);justify-content:center;align-items:center;gap:0}
+.s1-accent{width:100%;height:.4%;background:var(--green);flex-shrink:0;position:absolute;bottom:10%}
+.s1-title{
+  color:var(--white);
+  font-size:3em;
+  font-weight:900;
+  text-align:center;
+  line-height:1.2;
+  padding:0 8%;
+}
+.s1-divider{width:70%;height:3px;background:var(--amber);margin:.7em auto}
+.s1-sub{color:#CCDDFF;font-size:1.4em;text-align:center}
+.s1-names{
+  color:#AABBDD;
+  font-size:.88em;
+  text-align:center;
+  max-width:85%;
+  margin-top:.5em;
+  line-height:1.7;
+}
+
+/* ── Navigation ───────────────────────────────────────────────── */
+#nav{
+  display:flex;
+  align-items:center;
+  gap:1.2em;
+  padding:.5em 0;
+  color:#aaa;
+  font-size:clamp(10px,1.2vw,15px);
+  user-select:none;
+}
+#nav button{
+  background:#2a2a2a;
+  border:1px solid #444;
+  color:#eee;
+  padding:.4em 1.2em;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:1em;
+  font-family:inherit;
+  transition:background .2s;
+}
+#nav button:hover{background:#444}
+#nav button:disabled{opacity:.3;cursor:default}
+#counter{min-width:5em;text-align:center}
+#progress-bar{
+  position:absolute;
+  bottom:0;left:0;
+  height:3px;
+  background:var(--amber);
+  transition:width .3s;
+}
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 1 – Title
+════════════════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="s1-title">India's Private Investment Puzzle:<br>Still Not Picking Up?</div>
+  <div class="s1-divider"></div>
+  <div class="s1-sub">A Macroeconomic Analysis</div>
+  <div class="s1-names">
+    Group D3 &nbsp;|&nbsp; Brunda Mary C P &nbsp;·&nbsp; Darshan A S &nbsp;·&nbsp; Dheemanth D<br>
+    Dheeraj R &nbsp;·&nbsp; Likhith Yadav S &nbsp;·&nbsp; Gella Chidvilas Aryan
+  </div>
+  <div class="s1-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 2 – The Macroeconomic Paradox
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="title-bar">The Macroeconomic Paradox</div>
+  <div class="body">
+    <div class="card blue" style="padding:.4em .8em">
+      <strong>Theory (Mankiw):</strong> Investment (I) is the most volatile component of GDP &rarr; AD = C + I + G + NX
+    </div>
+    <div class="card red" style="padding:.4em .8em">
+      <strong>The Paradox:</strong> Government spending (G) is driving demand, but the Private Investment multiplier is lagging.
+    </div>
+
+    <div class="row">
+      <div class="metric-card">
+        <div class="mc-header" style="background:var(--green)">Real GDP Growth</div>
+        <div class="mc-val" style="color:var(--green)">7.4%</div>
+        <div class="mc-note">Fastest-growing major economy</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-header" style="background:var(--navy-light)">Public Capex Surge</div>
+        <div class="mc-val" style="color:var(--navy-light)">↑ 40%</div>
+        <div class="mc-note">Year-on-Year in H1 — government-led push</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-header" style="background:var(--amber)">Aggregate Investment (GFCF)</div>
+        <div class="mc-val" style="color:var(--amber)">30–33.8%</div>
+        <div class="mc-note">of GDP — stagnating band</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-header" style="background:var(--red)">The Execution Gap</div>
+        <div class="mc-val" style="color:var(--red)">21.5% vs ▼</div>
+        <div class="mc-note">RBI projected rise; NIPFP shows actual project completions <em>contracted</em> in 2024-25</div>
+      </div>
+    </div>
+  </div>
+  <div class="source">Sources: RBI Monetary Policy Report, NIPFP Investment Tracker, MoSPI National Accounts</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 3 – Tale of Two Economies
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="title-bar">A "Tale of Two Economies"</div>
+  <div class="body">
+    <div class="row" style="align-items:center">
+      <div class="panel green">
+        <div class="panel-header">🟢 NEW ECONOMY — Full Throttle</div>
+        <div class="panel-body">
+          <p><strong>Sectors:</strong></p>
+          <ul>
+            <li>Semiconductors</li>
+            <li>Electric Vehicles (EVs)</li>
+            <li>Renewable Energy</li>
+            <li>Electronics &amp; Contract Manufacturing</li>
+          </ul>
+          <br>
+          <p><strong>Trajectory:</strong></p>
+          <p>Aggressive greenfield expansions; deeply integrating into global supply chains via China+1 realignment. MEC ranges: <strong>15%–25%</strong> — clears every hurdle rate.</p>
+        </div>
+      </div>
+
+      <div class="vs-badge">VS</div>
+
+      <div class="panel red">
+        <div class="panel-header">🔴 OLD ECONOMY — Rational Caution</div>
+        <div class="panel-body">
+          <p><strong>Sectors:</strong></p>
+          <ul>
+            <li>FMCG (HUL, Dabur, Parle-G)</li>
+            <li>Basic Metals (JSW Steel)</li>
+            <li>Textiles (Welspun India)</li>
+            <li>Core Infrastructure</li>
+          </ul>
+          <br>
+          <p><strong>Trajectory:</strong></p>
+          <p>Deferring capacity additions; focusing on maximising existing plant efficiency. MEC ranges: <strong>8%–10%</strong> — barely clears hurdle rate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 4 – Investment Decision: Theory
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="title-bar">The Investment Decision — Theory</div>
+  <div class="body">
+    <div class="card blue">
+      <div class="card-title navy">Keynesian Investment Rule</div>
+      A firm invests <strong>ONLY</strong> if &nbsp;<code style="background:#dde;padding:.1em .4em;border-radius:3px">MEC &gt; Real Interest Rate (r)</code><br>
+      <strong>Fisher Equation:</strong> &nbsp; r = i − π &nbsp; (Real Rate = Nominal Rate − Inflation)
+    </div>
+
+    <div style="font-weight:700;font-size:1.05em;color:var(--navy);margin:.1em 0">India's Current Hurdle Rate</div>
+
+    <div class="rate-row navy">
+      <div class="rate-label">Nominal Repo Rate &nbsp;<em>(i)</em></div>
+      <div class="rate-val" style="color:var(--navy-light)">5.25%</div>
+      <div class="rate-note">after cumulative 125 bps cuts</div>
+    </div>
+    <div class="rate-row green">
+      <div class="rate-label">Current CPI Inflation &nbsp;<em>(π)</em></div>
+      <div class="rate-val" style="color:var(--green)">1.7%</div>
+      <div class="rate-note">remarkably subdued</div>
+    </div>
+    <div class="rate-row red">
+      <div class="rate-label">Effective Real Interest Rate &nbsp;<em>(r)</em></div>
+      <div class="rate-val" style="color:var(--red)">3.55%</div>
+      <div class="rate-note">= 5.25% − 1.7% &nbsp;— remains restrictive</div>
+    </div>
+
+    <div class="takeaway">📌 Macro Takeaway: Because inflation is so low, real borrowing costs remain highly restrictive despite RBI rate cuts.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 5 – Investment Decision: Corporate Reality
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="title-bar">The Investment Decision — Corporate Reality</div>
+  <div class="body">
+    <div style="font-size:.9em;color:var(--navy-light);font-style:italic">Go / No-Go Decision &nbsp;|&nbsp; Hurdle Rate = 3.55% real</div>
+    <div class="row">
+      <div class="panel green">
+        <div class="panel-header">🟢 NEW ECONOMY — MEC &gt; Hurdle Rate</div>
+        <div class="panel-body">
+          <p><strong>MEC Range: 15%–25%</strong></p>
+          <br>
+          <p><strong>Tata Electronics (iPhone mfg.)</strong></p>
+          <div class="indent">→ MEC: 18–22% &nbsp;✓ Clears hurdle</div>
+          <br>
+          <p><strong>Adani Green Energy (solar)</strong></p>
+          <div class="indent">→ IRRs: 14–16% &nbsp;✓ Clears hurdle</div>
+          <br>
+          <p>Both easily exceed the 3.55% real cost of capital. Investment is proceeding at full speed.</p>
+        </div>
+      </div>
+      <div class="panel red">
+        <div class="panel-header">🔴 OLD ECONOMY — MEC ≈ Hurdle Rate</div>
+        <div class="panel-body">
+          <p><strong>MEC Range: 8%–10%</strong></p>
+          <br>
+          <p><strong>JSW Steel — Dolvi Phase 3</strong></p>
+          <div class="indent">→ MEC: ~9–10% at current prices</div>
+          <div class="indent">→ Prompted deferral of expansion</div>
+          <br>
+          <p><strong>ITC — Food Processing Plant</strong></p>
+          <div class="indent">→ Deferred ₹3,000 crore plant</div>
+          <div class="indent">→ Failed to clear cost-of-capital test</div>
+          <br>
+          <p>Rational managerial discipline — not panic.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 6 – Broken Keynesian Multiplier
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="title-bar">The Broken Keynesian Multiplier</div>
+  <div class="body">
+    <div class="card blue">
+      <strong>Theory:</strong> Multiplier (k) = 1 / (1 − MPC). Massive public infrastructure spending should cascade into a broad consumption &amp; investment boom.
+    </div>
+    <div class="takeaway red">Reality: The multiplier is severely dampened by three key domestic leakages.</div>
+    <div class="row">
+      <div class="leak-card" style="border-color:var(--navy)">
+        <div class="lc-head" style="background:var(--navy)">Leakage 1 — Debt</div>
+        <div class="lc-body">
+          Household debt surged to a record <strong>41.3% of GDP</strong>.<br><br>
+          Income is leaking into EMI payments before reaching the real economy.
+        </div>
+      </div>
+      <div class="leak-card" style="border-color:var(--amber)">
+        <div class="lc-head" style="background:var(--amber)">Leakage 2 — Savings</div>
+        <div class="lc-body">
+          Net household financial savings collapsed to a decadal low of <strong>~5.3% of GDP</strong>.<br><br>
+          Households are borrowing to consume, not to invest.
+        </div>
+      </div>
+      <div class="leak-card" style="border-color:var(--red)">
+        <div class="lc-head" style="background:var(--red)">Leakage 3 — Imports</div>
+        <div class="lc-body">
+          ~80% of solar equipment &amp; majority of semiconductor components are <strong>imported</strong>.<br><br>
+          Multiplier leaks abroad rather than circulating domestically.
+        </div>
+      </div>
+    </div>
+    <div class="card amber" style="font-size:.85em;font-style:italic">
+      Net result: Even as public Capex soars, the demand signal reaching firms is far weaker than the headline spending figure implies.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 7 – Corporate Demand Shock
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="title-bar">The Corporate Demand Shock</div>
+  <div class="body">
+    <div class="takeaway red">Fragile, debt-driven consumption cannot send strong demand signals for new factory builds.</div>
+    <div style="font-weight:700;font-size:1.05em;color:var(--navy)">Corporate Execution in FY25-26</div>
+    <table>
+      <thead>
+        <tr><th style="width:22%">Sector / Company</th><th>What Happened</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FMCG Deferrals</strong></td>
+          <td>HUL &amp; Dabur flagged "weak mass-market demand". Rural volume growth stuck at <strong>3–4%</strong>. HUL deferred a planned personal care unit.</td>
+        </tr>
+        <tr>
+          <td><strong>Inventory Stress</strong></td>
+          <td>Parle-G chose <em>not</em> to add new production lines in FY25 due to insufficient volume certainty in rural markets.</td>
+        </tr>
+        <tr>
+          <td><strong>Auto Sector Hesitation</strong></td>
+          <td>Hero MotoCorp delayed its ₹2,000 crore Rajasthan greenfield plant by <strong>18 months</strong> due to sluggish rural recovery.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card blue" style="font-style:italic;font-size:.88em">
+      Common thread: Weak rural demand signals — not financial constraints — are holding back Old Economy investment.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 8 – Capacity Utilization Trap: Theory
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="title-bar">The Capacity Utilization Trap — Theory</div>
+  <div class="body">
+    <div class="row">
+      <!-- Gauge panel -->
+      <div class="col" style="max-width:40%;border:1px solid var(--border);border-radius:6px;padding:.6em;background:var(--light)">
+        <div style="font-weight:700;font-size:1em;color:var(--navy);text-align:center">Capacity Gauge</div>
+        <div class="gauge-wrap">
+          <div class="gauge-label">Current CU: <strong style="color:var(--amber)">74.3%</strong></div>
+          <div class="gauge-track"><div class="gauge-fill" style="width:74.3%;background:var(--amber)"></div></div>
+          <div class="gauge-caption" style="color:var(--amber)">AMBER zone — below trigger</div>
+        </div>
+        <div class="gauge-wrap">
+          <div class="gauge-label">Trigger Zone: <strong style="color:var(--green)">78%–80%</strong></div>
+          <div class="gauge-track"><div class="gauge-fill" style="width:80%;background:var(--green)"></div></div>
+          <div class="gauge-caption" style="color:var(--green)">GREEN zone — capex boom triggers here</div>
+        </div>
+        <div style="font-size:.8em;font-style:italic;text-align:center;margin-top:.4em;color:var(--gray)">
+          Traditional manufacturing is trapped in a waiting game — firms will not invest until the gauge turns green.
+        </div>
+      </div>
+      <!-- Theory panel -->
+      <div class="panel blue" style="flex:1">
+        <div class="panel-header">Theory — Operating in the SRAS Zone</div>
+        <div class="panel-body">
+          <ul>
+            <li>Firms operate along the <strong>SRAS curve</strong> by adding shifts / labour to existing factories.</li>
+            <li>Financially irrational to deploy capital to shift the <strong>LRAS curve</strong> until existing capacity is exhausted.</li>
+          </ul>
+          <br>
+          <p><strong>Key Numbers (RBI OBICUS Survey):</strong></p>
+          <table style="margin-top:.4em">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Current Aggregate Capacity Utilization</td><td style="color:var(--amber);font-weight:700">74.3%</td></tr>
+              <tr><td>Macro Threshold (broad capex boom triggers)</td><td style="color:var(--green);font-weight:700">78%–80%</td></tr>
+              <tr><td>Gap to trigger</td><td style="color:var(--red);font-weight:700">~6 pp</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="source">Source: RBI Order Books, Inventories and Capacity Utilisation Survey (OBICUS), Q2 FY26</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 9 – Capacity Utilization Trap: Corporate Reality
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="title-bar">The Capacity Utilization Trap — Corporate Reality</div>
+  <div class="body">
+    <div style="font-size:.9em;font-style:italic;color:var(--navy-light)">Traffic-light framework: Where are India's major manufacturers right now?</div>
+    <div class="row">
+      <div class="panel red">
+        <div class="panel-header">🔴 HOLDING BACK &nbsp;— Utilization &lt; 75%</div>
+        <div class="panel-body">
+          <p><strong>JSW Steel</strong></p>
+          <ul>
+            <li>Running at <strong>72–74%</strong> capacity</li>
+            <li>Deferred <strong>₹40,000+ crore</strong> capacity expansion</li>
+            <li>Awaiting demand clarity before committing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel amber">
+        <div class="panel-header">🟡 ON THE BRINK &nbsp;— Utilization ~78%</div>
+        <div class="panel-body">
+          <p><strong>Welspun India</strong></p>
+          <ul>
+            <li>Operating MMF textile units at <strong>78%</strong></li>
+            <li>Holding off on Phase 2 expansion</li>
+            <li>Trigger: Sustained 80%+ for two quarters</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel green">
+        <div class="panel-header">🟢 TRIGGER FIRED &nbsp;— Utilization &gt; 80%</div>
+        <div class="panel-body">
+          <p><strong>Maruti Suzuki</strong></p>
+          <ul>
+            <li>Manesar &amp; Gujarat plants crossed <strong>85%</strong></li>
+            <li>→ Triggered <strong>₹11,000 crore</strong> Kharkhoda greenfield plant</li>
+          </ul>
+          <p style="margin-top:.4em"><strong>Tata Motors</strong></p>
+          <ul>
+            <li>EV lines in Pune above <strong>80%</strong></li>
+            <li>→ New battery-pack capacity immediately commissioned</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 10 – Supply-Side Interventions & PLI
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="title-bar">Supply-Side Interventions &amp; PLI</div>
+  <div class="body">
+    <div class="card blue">
+      <div class="card-title navy">Theory — Supply-Side Economics &amp; Market Failure</div>
+      When the free market fails to clear the hurdle rate for critical technologies, the State acts as a <strong>"risk absorber"</strong> — artificially boosting MEC to crowd-in private investment.
+    </div>
+    <div class="takeaway">The Policy Anchor: Production Linked Incentive (PLI) Scheme</div>
+    <div class="card green">
+      <ul>
+        <li><strong>Total Outlay:</strong> ₹1.91 lakh crore across <strong>14 strategic sectors</strong></li>
+        <li><strong>Mechanism:</strong> Moves from input subsidies → links financial rewards directly to incremental sales &amp; production</li>
+        <li><strong>Effect on MEC:</strong> Artificially raises the effective return on new capacity, making the Go / No-Go calculus viable in critical tech sectors</li>
+        <li><strong>Target sectors:</strong> Semiconductors · EVs · Batteries · Specialty Chemicals · Pharma · Mobile Phones · White Goods · Solar PV · Textiles</li>
+      </ul>
+    </div>
+  </div>
+  <div class="source">Source: DPIIT PLI Annual Report FY25; Ministry of Finance Budget Documents</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 11 – Sectoral Divergence
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="title-bar">Sectoral Divergence in Execution</div>
+  <div class="body">
+    <div class="row">
+      <div class="panel green">
+        <div class="panel-header">🟢 THE BOOMING WINNERS — Electronics</div>
+        <div class="panel-body">
+          <ul>
+            <li>Domestic electronics production: <strong>↑ 146%</strong> to ₹5.45 lakh crore</li>
+            <li>Mobile phone imports: <strong>↓ 77%</strong> (import-substitution working)</li>
+          </ul>
+          <br>
+          <p><strong>Tata Electronics &amp; Powerchip:</strong></p>
+          <div class="indent">$11 billion semiconductor fab — Dholera</div>
+          <br>
+          <p><strong>Micron Technology:</strong></p>
+          <div class="indent">₹22,000 crore ATMP facility — Sanand</div>
+        </div>
+      </div>
+      <div class="panel red">
+        <div class="panel-header">🔴 THE LAGGING TRADITIONAL SECTORS</div>
+        <div class="panel-body">
+          <p><strong>Index of Eight Core Industries:</strong></p>
+          <div class="indent">Near-zero growth in October 2025</div>
+          <br>
+          <p><strong>PLI for MMF Textiles:</strong></p>
+          <ul>
+            <li>Only <strong>₹1,100 crore</strong> invested</li>
+            <li>vs ₹10,683 crore target <em>(~10% uptake)</em></li>
+          </ul>
+          <br>
+          <p><strong>Core infrastructure:</strong></p>
+          <div class="indent">Capacity utilization stuck below 75% across cement, steel, power sectors</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 12 – Corporate Balance Sheets vs. Crowding Out
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="title-bar">Corporate Balance Sheets vs. Crowding Out</div>
+  <div class="body">
+    <div class="card green">
+      <div class="card-title green">"Twin Balance Sheet Advantage"</div>
+      Unlike the 2010s (NPA crisis era), corporate India is highly deleveraged with record profitability. Internal financial ability to invest is <strong>exceptionally strong</strong>.
+    </div>
+    <div class="row">
+      <div class="panel blue">
+        <div class="panel-header">IS-LM Theory — Crowding Out Mechanism</div>
+        <div class="panel-body">
+          <ol>
+            <li>Massive government infra spending shifts <strong>IS curve</strong> outward →</li>
+            <li>Sovereign borrowing absorbs domestic savings →</li>
+            <li>Upward pressure on equilibrium interest rates →</li>
+            <li><strong>"Crowding out"</strong> private investment</li>
+          </ol>
+          <br>
+          <p style="font-style:italic;font-size:.9em">r* ↑ → MEC of marginal projects no longer clears hurdle → deferral</p>
+        </div>
+      </div>
+      <div class="panel amber">
+        <div class="panel-header">India's Reality — Partial Crowding Out</div>
+        <div class="panel-body">
+          <p><strong>Large corporates (immune):</strong></p>
+          <ul>
+            <li>Record profit retention funds capex internally</li>
+            <li>Access to corporate bond markets &amp; private credit</li>
+          </ul>
+          <br>
+          <p><strong>MSMEs face the full effect:</strong></p>
+          <ul>
+            <li>Dependent on commercial bank lending</li>
+            <li>Cost of debt remains above their MEC</li>
+            <li>Expansions are being delayed</li>
+          </ul>
+          <br>
+          <p style="font-style:italic;font-size:.88em">Net verdict: Crowding out is real but sector-specific.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 13 – Bypassing the Squeeze
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="title-bar">Bypassing the Squeeze — Private Credit</div>
+  <div class="body">
+    <div style="font-weight:700;font-size:1.05em;color:var(--navy)">Two Diverging Paths in the Capital Market</div>
+    <div class="row">
+      <div class="panel green">
+        <div class="panel-header">🟢 LARGE CORPORATIONS — Immune</div>
+        <div class="panel-body">
+          <p>Bypassing domestic banking squeeze via:</p>
+          <br>
+          <p><strong>Corporate Bond Market</strong></p>
+          <div class="indent">Direct placement at competitive spreads</div>
+          <br>
+          <p><strong>Private Credit Market</strong></p>
+          <div class="indent">Surged <strong>35%</strong> → <strong>US$12.4 billion</strong> in CY 2025</div>
+          <div class="indent">(Blackstone, KKR, Ares deploying actively)</div>
+          <br>
+          <p><strong>Internal Accruals</strong></p>
+          <div class="indent">Record FY25 profits fund capex internally</div>
+          <br>
+          <p style="font-style:italic;font-size:.9em">Effect: Effectively insulated from rate environment.</p>
+        </div>
+      </div>
+      <div class="panel red">
+        <div class="panel-header">🔴 MSMEs &amp; TRADITIONAL MFG — Priced Out</div>
+        <div class="panel-body">
+          <p>Rely entirely on:</p>
+          <br>
+          <p><strong>Commercial Bank Loans</strong></p>
+          <div class="indent">Spread above repo; effective rate <strong>~9–10%</strong></div>
+          <br>
+          <p><strong>NBFCs</strong></p>
+          <div class="indent">Even higher effective borrowing costs</div>
+          <br>
+          <p><strong>The Crowding-Out Math:</strong></p>
+          <div class="indent">Borrowing cost: ~9–10%</div>
+          <div class="indent">Old Economy MEC: ~8–10%</div>
+          <div class="indent" style="color:var(--red);font-weight:700">→ Margin of safety = zero or negative</div>
+          <br>
+          <p>Factory expansions are being deferred.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 14 – Energy-Digital Mismatch
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="title-bar">The Energy-Digital Mismatch</div>
+  <div class="body">
+    <div class="card blue">
+      <div class="card-title navy">Theory — Complementary Capital</div>
+      To sustainably shift LRAS rightward via high-tech manufacturing, <strong>proportionate expansion in energy infrastructure</strong> is essential.
+    </div>
+    <div class="card red">
+      <div class="card-title red">The Challenge</div>
+      "New Economy" anchors ($11 billion fabs &amp; AI data centers) are massively energy-intensive. Without a synchronized power boom, operational costs rise — <strong>destroying MEC</strong>.
+    </div>
+    <div style="font-weight:700;font-size:1em;color:var(--navy)">Policy Response — Energy Security Roadmap</div>
+    <div class="row">
+      <div class="card navy" style="flex:1">
+        <div class="card-title navy">SHANTI Act 2025</div>
+        ₹20,000 crore Nuclear Energy Mission for <strong>Small Modular Reactors (SMRs)</strong>.<br>
+        Target: 100 GW nuclear capacity by 2047. Low-carbon baseload for fabs &amp; data centres.
+      </div>
+      <div class="card green" style="flex:1">
+        <div class="card-title green">CCUS Initiative</div>
+        ₹20,000 crore for <strong>Carbon Capture &amp; Utilisation</strong> infrastructure in heavy industries.<br>
+        Focus: Green steel production — makes India's steel export-competitive.
+      </div>
+      <div class="card amber" style="flex:1">
+        <div class="card-title amber">Renewable Push</div>
+        <strong>450 GW</strong> renewable target by 2030. Solar + storage to power EV charging networks.<br>
+        Adani Green, NTPC, and Torrent Power commissioning gigawatt-scale projects.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 15 – Corporate Action in Green Infrastructure
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="title-bar">Corporate Action in Green Infrastructure</div>
+  <div class="body">
+    <div style="font-size:.9em;font-style:italic;color:var(--navy-light)">How Private Capital is Responding to the Energy-Digital Opportunity</div>
+    <table>
+      <thead>
+        <tr><th style="width:22%">Company</th><th>Action &amp; Strategic Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--green)">Larsen &amp; Toubro (L&amp;T)</strong></td>
+          <td>Constructing India's <strong>largest green hydrogen plant</strong> at Indian Oil's Panipat refinery. Positions L&amp;T as dominant EPC contractor for the energy transition — recurring revenue model.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy)">Adani Green Energy</strong></td>
+          <td>Deploying <strong>₹2.4 lakh crore</strong> capex pipeline to feed digital &amp; industrial power demand. Locked-in long-term PPAs yield <strong>IRRs of 14–16%</strong>, comfortably beating the 3.55% real cost of capital.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--amber)">NTPC Green Energy</strong></td>
+          <td><strong>100 GW</strong> renewable capacity target. Hybrid solar-wind-storage complexes. Offtake guaranteed by PSU and industrial consumers — virtually zero merchant risk.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">Tata Power</strong></td>
+          <td>Pumped hydro storage + rooftop solar + EV charging network. Complementary capex: each MW of storage unlocks additional renewable MEC.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="takeaway green">Net result: Energy-transition investments achieve IRRs of 14–16% — well above the 3.55% hurdle rate.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 16 – Global Competitive Positioning
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="title-bar">Global Competitive Positioning</div>
+  <div class="body">
+    <div class="card blue">
+      <div class="card-title navy">Theory — Open Economy Macro &amp; International Risk Premiums</div>
+      When international risk premiums shift (e.g., US-China trade fragmentation), global capital reallocates to stable economies. Competitiveness = <strong>"Strategic Indispensability"</strong> in global supply chains.
+    </div>
+    <div style="font-weight:700;font-size:1.05em;color:var(--navy)">Key Numbers</div>
+    <div class="rate-row green">
+      <div class="rate-label">Global Greenfield FDI  (H1 2025)</div>
+      <div class="rate-val" style="color:var(--green)">↑ 7%</div>
+      <div class="rate-note">Project values surged globally even as overall FDI dropped</div>
+    </div>
+    <div class="rate-row navy">
+      <div class="rate-label">India Gross FDI Inflows  (FY25)</div>
+      <div class="rate-val" style="color:var(--navy-light)">USD 81.04 Bn</div>
+      <div class="rate-note">Resilient inflows despite global headwinds</div>
+    </div>
+    <div class="rate-row amber" style="border-color:var(--amber)">
+      <div class="rate-label">China+1 Beneficiary Rank</div>
+      <div class="rate-val" style="color:var(--amber)">#1</div>
+      <div class="rate-note">India capturing largest share of supply-chain realignment</div>
+    </div>
+  </div>
+  <div class="source">Source: UNCTAD World Investment Report 2025; RBI FDI Statistics; Financial Times fDi Markets database</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 17 – Capturing the "China+1" Shift
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s17">
+  <div class="title-bar">Capturing the "China+1" Shift</div>
+  <div class="body">
+    <div style="font-size:.9em;font-style:italic;color:var(--navy-light)">India's window of strategic opportunity in global supply-chain realignment</div>
+    <table>
+      <thead>
+        <tr><th style="width:25%">Theme</th><th>Key Data &amp; Detail</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--green)">🍎 The Apple / iPhone Shift</strong></td>
+          <td>Apple moved <strong>14%</strong> of global iPhone production to India in 2025. Tata Electronics &amp; Foxconn now assembling for <em>global</em> export — not just domestic consumption.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy)">📦 Contract Mfg. Surge</strong></td>
+          <td>Samsung, Foxconn, Jabil, and Pegatron aggressively sourcing locally for export-grade electronics. India's electronics export value crossed <strong>$29 billion</strong> in FY25 — up <strong>24% YoY</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--amber)">💾 Semiconductor Market</strong></td>
+          <td>India Semiconductor Mission projects domestic market to hit <strong>₹9.7 trillion by 2030</strong>. Tata–Powerchip $11B fab &amp; Micron ₹22,000 crore ATMP already under construction.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">🛡️ Defence &amp; Aerospace</strong></td>
+          <td>India's defence exports surged to <strong>₹21,083 crore in FY24</strong> (2× in three years). HAL, BEL, and private OEMs integrating into US &amp; European supply chains.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 18 – The Final Verdict
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="title-bar">The Final Verdict</div>
+  <div class="body">
+    <div style="background:var(--navy);color:var(--white);padding:.45em 1em;border-radius:4px;font-size:1.2em;font-weight:700;text-align:center">
+      Is Private Investment Still Not Picking Up?
+    </div>
+    <div style="background:var(--green);color:var(--white);padding:.45em 1em;border-radius:4px;font-size:1em;font-weight:700;text-align:center">
+      NO — It is NOT structurally stagnant. The economy is selectively booming while traditional sectors exercise rational managerial discipline.
+    </div>
+    <div class="row">
+      <div class="panel green">
+        <div class="panel-header">🟢 "New Economy" IS BOOMING</div>
+        <div class="panel-body">
+          <ul>
+            <li><strong>Sectors:</strong> High-tech, EV, Renewables, Semiconductors</li>
+            <li><strong>MEC Range: 15%–25%</strong> → clears 3.55% hurdle easily</li>
+            <li>PLI scheme acts as government risk-absorber, making marginal projects commercially viable</li>
+            <li>FDI + China+1 supply chain integration providing additional demand certainty</li>
+            <li>Greenfield investments proceeding at full pace</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel red">
+        <div class="panel-header">🔴 "Old Economy" IS WAITING</div>
+        <div class="panel-body">
+          <ul>
+            <li><strong>Sectors:</strong> FMCG, Steel, Textiles, Core Infra</li>
+            <li><strong>MEC Range: 8%–10%</strong> → borderline viable</li>
+            <li>Trapped by <strong>74.3%</strong> capacity utilization — below the 78–80% trigger threshold</li>
+            <li>Broken domestic multiplier: household debt at 41.3% of GDP, rural wages subdued</li>
+            <li>Rational deferral — not corporate failure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SLIDE 19 – Triggers & Corporate Action Plan
+════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s19">
+  <div class="title-bar">Triggers &amp; Corporate Action Plan (FY26-27)</div>
+  <div class="body">
+    <div class="takeaway amber">🚀 The Launchpad: Corporate India is fueled, positioned, and awaiting the final macroeconomic demand signal.</div>
+    <div class="row">
+      <div class="panel blue">
+        <div class="panel-header">The Final Triggers</div>
+        <div class="panel-body">
+          <p><strong>Trigger 1 — Demand:</strong></p>
+          <div class="indent">Aggregate demand must push capacity utilization consistently past the <strong>80% SRAS boundary</strong>.</div>
+          <div class="indent" style="color:var(--mid);font-style:italic">(Current: 74.3% → Gap: ~6 percentage points)</div>
+          <br>
+          <p><strong>Trigger 2 — Interest Rates:</strong></p>
+          <div class="indent">Real interest rates must normalize to make <strong>MSME borrowing</strong> commercially viable.</div>
+          <div class="indent" style="color:var(--mid);font-style:italic">(Current: 3.55% → Target: sub-2.5% real)</div>
+        </div>
+      </div>
+      <div class="panel green">
+        <div class="panel-header">Action Plan for Corporate Planners</div>
+        <div class="panel-body">
+          <p><strong>Action 1 — Stop evaluating purely for domestic consumption demand.</strong></p>
+          <div class="indent">Highest ROIs are currently found by integrating domestic plants into <strong>China+1</strong> global supply chains.</div>
+          <br>
+          <p><strong>Action 2 — Prepare for the Turn.</strong></p>
+          <div class="indent">Corporate balance sheets are at a <strong>decadal best</strong>. Firms possess the capital — they are simply stationed on the launchpad awaiting the final macroeconomic demand signal.</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--navy);color:var(--white);padding:.5em 1em;border-radius:4px;font-size:.95em;font-weight:600;text-align:center">
+      Conclusion: India's investment story is not broken — it is <em>bifurcated</em>.<br>
+      The triggers to unlock broad-based private capex are identifiable, measurable, and closer than the headlines suggest.
+    </div>
+  </div>
+</div>
+
+<!-- Progress bar inside deck -->
+<div id="progress-bar"></div>
+</div><!-- /#deck -->
+
+<!-- ── Navigation ──────────────────────────────────────────────── -->
+<div id="nav">
+  <button id="btn-prev" onclick="go(-1)" disabled>&#8592; Prev</button>
+  <span id="counter">1 / 19</span>
+  <button id="btn-next" onclick="go(1)">Next &#8594;</button>
+  <span style="color:#666;font-size:.9em">| ← → keys to navigate</span>
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let cur      = 0;
+
+  function show(n){
+    slides[cur].classList.remove('active');
+    cur = (n + total) % total;
+    slides[cur].classList.add('active');
+    document.getElementById('counter').textContent = (cur+1)+' / '+total;
+    document.getElementById('btn-prev').disabled = (cur === 0);
+    document.getElementById('btn-next').disabled = (cur === total-1);
+    document.getElementById('progress-bar').style.width = ((cur+1)/total*100)+'%';
+  }
+
+  window.go = function(d){ show(cur+d); };
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') go(1);
+    if(e.key==='ArrowLeft' ||e.key==='ArrowUp')                  go(-1);
+  });
+
+  // Touch swipe support
+  let tx = 0;
+  document.getElementById('deck').addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+  document.getElementById('deck').addEventListener('touchend',   function(e){
+    const dx = e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx)>40){ go(dx<0?1:-1); }
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

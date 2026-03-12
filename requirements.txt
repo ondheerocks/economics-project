@@ -1,1 +1,1 @@
-python-pptx
+python-pptx>=1.0.2
